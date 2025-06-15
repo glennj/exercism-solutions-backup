@@ -1,0 +1,65 @@
+module TwelveDays exposing (recite)
+
+import Array
+
+
+nthNum number =
+    Array.fromList
+        [ "first"
+        , "second"
+        , "third"
+        , "fourth"
+        , "fifth"
+        , "sixth"
+        , "seventh"
+        , "eighth"
+        , "ninth"
+        , "tenth"
+        , "eleventh"
+        , "twelfth"
+        ]
+
+
+gift number =
+    case number of
+        1 -> "a Partridge in a Pear Tree"
+        2 -> "two Turtle Doves"
+        3 -> "three French Hens"
+        4 -> "four Calling Birds"
+        5 -> "five Gold Rings"
+        6 -> "six Geese-a-Laying"
+        7 -> "seven Swans-a-Swimming"
+        8 -> "eight Maids-a-Milking"
+        9 -> "nine Ladies Dancing"
+        10 -> "ten Lords-a-Leaping"
+        11 -> "eleven Pipers Piping"
+        12 -> "twelve Drummers Drumming"
+        _ -> ""
+
+
+recite : Int -> Int -> List String
+recite start stop =
+    let
+        verses n acc =
+            if n > stop then
+                List.reverse acc
+            else
+                verses (n + 1) (verse n :: acc)
+    in
+    verses start []
+
+
+verse number =
+    let
+        gifts n acc =
+            case ( n, number ) of
+                ( 0, _ ) -> List.reverse acc |> String.join ", "
+                ( 1, 1 ) -> gifts 0 (gift 1 :: acc)
+                ( 1, _ ) -> gifts 0 (("and " ++ gift 1) :: acc)
+                _        -> gifts (n - 1) (gift n :: acc)
+    in
+    "On the "
+        ++ (Array.get (number - 1) nthList |> Maybe.withDefault "")
+        ++ " day of Christmas my true love gave to me: "
+        ++ gifts number []
+        ++ "."
