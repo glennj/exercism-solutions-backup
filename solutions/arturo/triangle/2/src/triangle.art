@@ -1,0 +1,27 @@
+;; playing with blocks
+
+equilateral?: function [x y z][
+    classifier x y z [n = 1]
+]
+
+isosceles?: function [x y z][
+    classifier x y z [n =< 2]
+]
+
+scalene?: function [x y z][
+    classifier x y z [n = 3]
+]
+
+classifier: function [x y z checkSides :block][
+    and?
+        [triangle? x y z]
+        [
+            n: size unique @[x y z]
+            do checkSides
+        ]
+]
+
+triangle?: function [x y z][
+    [a b c]: sort @[x y z]
+    and? [a > 0] [(a + b) >= c]
+]
