@@ -1,0 +1,16 @@
+triangle?: function [x y z][
+    [a b c]: sort @[x y z]
+    and? [a > 0] [c < a + b]
+]
+
+equilateral?: function [x y z][
+    and? [triangle? x y z] [one? size unique @[x y z]]
+]
+
+isosceles?: function [x y z][
+    and? [triangle? x y z] [2 =< size unique @[x y z]]
+]
+
+scalene?: function [x y z][
+    and? [triangle? x y z] [3 = size unique @[x y z]]
+]
