@@ -1,0 +1,7 @@
+list: function[scores] -> scores
+
+latest: function[scores] -> last scores
+
+personalBest: $ => [ & | sort.descending | first ]
+
+personalTopThree: $ => [ & | sort.descending | take 3 ]
