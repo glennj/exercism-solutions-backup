@@ -1,0 +1,11 @@
+squareOfSum: function [n][
+    ((n * (n + 1)) / 2) ^ 2
+]
+
+sumOfSquares: function [n][
+    (n * (n + 1) * (n + n + 1)) / 6
+]
+
+differenceOfSquares: function [n][
+    abs sub sumOfSquares n squareOfSum n
+]
