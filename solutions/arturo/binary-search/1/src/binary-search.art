@@ -1,0 +1,17 @@
+find: function [values value][  
+    left: 0
+    right: (size values) - 1
+
+    while [left =< right][
+        index: (left + right) / 2
+
+        when.has: values\[index] [
+            [= value] -> return index
+            [< value] -> left: index + 1
+            [> value] -> right: index - 1
+        ]
+    ]
+
+    null
+]
+
