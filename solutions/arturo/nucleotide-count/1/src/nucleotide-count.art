@@ -1,0 +1,11 @@
+nucleotideCounts: function [strand][
+    counts: #[A:0 C:0 G:0 T:0]
+    nucleotides: join keys counts
+
+    loop strand [nuc][
+        if not? in? nuc nucleotides -> return null
+        set counts nuc 1 + get counts nuc
+    ]
+
+    counts
+]
