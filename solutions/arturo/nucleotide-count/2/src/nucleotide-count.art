@@ -1,0 +1,8 @@
+nucleotideCounts: function [strand][
+    counts: #[A:0 C:0 G:0 T:0]
+    nucleotides: join keys counts
+
+    switch some? strand => [not? in? & nucleotides]
+        -> return null
+        -> extend counts tally strand
+]
