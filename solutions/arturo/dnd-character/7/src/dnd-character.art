@@ -1,0 +1,25 @@
+modifier: $ =>[ sub & 10 | fdiv 2 | floor ]
+
+dice: $ =>[ map 4 =>[ random 1 6 ]]
+
+ability: $ => [ (sum dice) - (min dice) ]
+
+characteristics: [
+    « strength
+    « dexterity
+    « constitution
+    « hitpoints
+    « intelligence
+    « wisdom
+    « charisma
+]
+
+makeCharacter: function [][
+    fold.seed: #[] characteristics [character characteristic][
+        set character characteristic case characteristic [
+            "hitpoints" -> 10 + modifier character\constitution
+            any -> ability
+        ]
+        character
+    ]
+]
