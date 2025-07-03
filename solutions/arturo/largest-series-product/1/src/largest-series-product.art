@@ -1,0 +1,12 @@
+largestProduct: function [str span][
+    if span > size str -> return null
+    if negative? span -> return null
+    if zero? span -> return 1
+    if not? numeric? str -> return null
+
+    fold.seed:[] 0..((size str) - span) [slices i][
+        slices ++ slice str i (i + span - 1)
+    ]
+    | map => [split & | map => [to :integer &] | product]
+    | max
+]
