@@ -1,0 +1,11 @@
+encode: function [plaintext][
+    runs: match plaintext {/(.)(\1+)/} | sort.descending
+    replacements: map runs 'r -> ~"|size r||first r|"
+    replace plaintext runs replacements
+]
+
+decode: function [ciphertext][
+    runs: match ciphertext {/(\d+)(\D)/} | sort.descending
+    replacements: map runs 'r -> join repeat (last r) (to :integer chop r)
+    replace ciphertext runs replacements
+]
