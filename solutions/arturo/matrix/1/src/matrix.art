@@ -1,0 +1,12 @@
+row: function [matrix position][
+    split.lines matrix 
+    | get dec position
+    | split.words
+    | map => [to :integer &]
+]
+
+column: function [matrix position][
+    split.lines matrix
+    | map => [split.words & | map => [to :integer &]]
+    | map => [get & dec position]
+]
