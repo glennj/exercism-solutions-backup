@@ -1,0 +1,9 @@
+clean: function [phrase][
+    ; remove valid non-digits
+    cleaned: replace phrase {/[() .+-]/} ""
+
+    ; extract phone number from valid NANP
+    m: match.capture cleaned {/^1?([2-9]\d\d[2-9]\d\d\d{4})$/}
+
+    switch empty? m -> null -> first m
+]
