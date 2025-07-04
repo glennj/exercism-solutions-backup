@@ -1,0 +1,16 @@
+clean: function [phrase][
+    ; remove valid non-digits
+    cleaned: replace phrase {/[() .+-]/} ""
+
+    if not? numeric? cleaned -> return null
+    when.has:(size cleaned) [
+        [< 10] -> return null
+        [> 11] -> return null
+        [= 11] [ (prefix? cleaned "1")? -> drop 'cleaned -> return null ]
+    ]
+
+    if contains? "01" cleaned\0 -> return null
+    if contains? "01" cleaned\3 -> return null
+
+    cleaned
+]
