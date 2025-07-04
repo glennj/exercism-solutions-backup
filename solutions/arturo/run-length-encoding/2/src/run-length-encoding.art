@@ -1,0 +1,17 @@
+encode: function [plaintext][
+    plaintext
+    | match {/(.)(\1*)/}
+    | map 'rep [
+        ((one? size rep)? -> "" -> to :string size rep) ++ first rep
+    ]
+    | join
+]
+
+decode: function [ciphertext][
+    ciphertext
+    | match.capture {/(\d*)(\D)/}
+    | map 'm [
+        repeat last m ((empty? first m)? -> 1 -> to :integer first m)
+    ]
+    | join
+]
