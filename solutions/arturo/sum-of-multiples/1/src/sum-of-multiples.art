@@ -1,0 +1,9 @@
+sumOfMultiples: function [factors limit][
+    fs: filter factors => zero?
+
+    if or? [one? limit] [empty? factors] -> return 0
+
+    select 1..(limit - 1) 'n [ some? fs 'f [zero? mod n f] ]
+    | sum
+
+]
