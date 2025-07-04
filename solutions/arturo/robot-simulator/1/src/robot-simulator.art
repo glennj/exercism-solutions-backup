@@ -1,0 +1,31 @@
+define :robot [
+    init: constructor [x :integer y :integer direction :string]
+
+    turns: #[
+        right: #[ north:"east" east:"south" south:"west" west:"north" ]
+        left:  #[ north:"west" east:"north" south:"east" west:"south" ]
+    ]
+
+    turnright: method [] -> this\direction: this\turns\right\[this\direction]
+    turnleft:  method [] -> this\direction: this\turns\left\[this\direction]
+
+    advance: method [][
+        step: $ [adder axis] -> this\[axis]: call adder @[this\[axis]]
+        case this\direction [
+            "north" -> step 'inc 'y
+            "east"  -> step 'inc 'x
+            "south" -> step 'dec 'y
+            "west"  -> step 'dec 'x
+        ]
+    ]
+
+    simulate: method [commands :string] [
+        loop commands [c][
+            case c [
+                'R' -> this\turnright
+                'L' -> this\turnleft
+                'A' -> this\advance
+            ]
+        ]
+    ]
+]
