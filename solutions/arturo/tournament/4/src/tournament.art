@@ -1,0 +1,59 @@
+import {src/team}!
+
+tally: function [lines][
+    join.with: "\n"  (@[heading] ++ processInput lines)
+]
+
+heading: "Team                           | MP |  W |  D |  L |  P"
+
+;------------------------------------------------------------
+processInput: function [lines][
+    if empty? lines -> return []
+
+    teams: #[]
+    loop (split.lines lines) [line][
+        [home away result]: split.by: ";" line
+        processMatch 'teams home away result
+    ]
+
+    standings: sort values teams
+
+    map standings => [to :string &]
+]
+
+;------------------------------------------------------------
+processMatch: function [ts home away result][
+    homeTeam: getTeam ts home
+    awayTeam: getTeam ts away
+
+    case result [
+        "win" [
+            homeTeam\win
+            awayTeam\lose
+        ]
+        "loss" [
+            homeTeam\lose
+            awayTeam\win
+        ]
+        "draw" [
+            homeTeam\draw
+            awayTeam\draw
+        ]
+    ]
+
+    ; why do I have to do this? Doesn't arturo do references?
+    teamdict: var ts
+    teamdict\[homeTeam\name]: homeTeam
+    teamdict\[awayTeam\name]: awayTeam
+]
+
+getTeam: function [ts name][
+    teamdict: var ts
+    switch key? teams name
+        [ get teamdict name ]
+        [
+            team: to :team @[name]!
+            teamdict\[name]: team
+            team
+        ]
+]
