@@ -1,0 +1,33 @@
+define :team [
+    init: method [name :string][
+        this\name: name
+        this\wins: 0
+        this\draws: 0
+        this\losses: 0
+    ]
+
+    win:  method [][ \wins: inc \wins ]
+    draw: method [][ \draws: inc \draws ]
+    lose: method [][ \losses: inc \losses ]
+
+    matches: method [][ \wins + \draws + \losses ]
+    points:  method [][ (3 * \wins) + \draws ]
+
+    compare: method [other :team][
+        p: compare this\points other\points
+        switch not? zero? p
+            -> neg p                        ; descending by points
+            -> compare this\name other\name ; ascending by name
+    ]
+
+    string: method [][
+        @[
+            (pad.right \name 30)
+            (pad (to :string \matches) 2)
+            (pad (to :string \wins) 2)
+            (pad (to :string \draws) 2)
+            (pad (to :string \losses) 2)
+            (pad (to :string \points) 2)
+        ] | join.with: " | "
+    ]
+]
