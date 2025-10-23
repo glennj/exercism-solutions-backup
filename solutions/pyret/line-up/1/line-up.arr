@@ -1,0 +1,24 @@
+use context essentials2020 # Don't delete this line when using Pyret on Exercism 
+
+provide:
+  format-message
+end
+
+fun format-message(person, position):
+  person
+    + ", you are the "
+    + num-to-string(position)
+    + ordinal(position)
+    + " customer we serve today. Thank you!"
+end
+
+fun ordinal(n):
+  ones = num-modulo(n, 10)
+  tens = num-modulo(n, 100)
+  ask:
+    | (ones == 1) and (tens <> 11) then: "st"
+    | (ones == 2) and (tens <> 12) then: "nd"
+    | (ones == 3) and (tens <> 13) then: "rd"
+    | otherwise: "th"
+  end
+end
